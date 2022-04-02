@@ -12,5 +12,6 @@ void setup()
 void loop()
 {
     Board::RFID::Open();
-    Board::RFID::Authenticate();
+    Board::RFID::Run();
+    // Board::RFID::Authenticate();
 }

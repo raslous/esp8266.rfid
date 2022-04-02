@@ -18,6 +18,8 @@ const char* serverName = "http://anetid-001-site1.ctempurl.com/api/access";
 const char* apiAuth = "http://anetid-001-site1.ctempurl.com/api/auth?hex=";
 // const char* apiAuth = "https://localhost:7085/api/auth?hex=C2%20D6%20F7%202C";
 
+bool toggle = true;
+
 class WebServer
 {
     public:
@@ -37,6 +39,11 @@ class WebServer
     {
         server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
             request->send(200, "text/plain", "ready");
+        });
+
+        server.on("/toggle", HTTP_GET, [](AsyncWebServerRequest * request) {
+            request->send(200, "text/plain", "toggle");
+            toggle = !toggle;
         });
 
         server.begin();

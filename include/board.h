@@ -53,7 +53,7 @@ class Board{
 
             static void Run()
             {
-                if(isStandBy)
+                if(toggle)
                     Authenticate();
                 else
                     Registration();
@@ -61,7 +61,8 @@ class Board{
 
             static void Registration()
             {
-
+                Serial.println("[ STAND BY ... ]");
+                delay(1000);
             }
 
             static void Authenticate()
