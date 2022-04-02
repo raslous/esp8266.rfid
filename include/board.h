@@ -30,6 +30,7 @@ class Board{
         delay(10);
 
         WebServer::Setup();
+        WebServer::Start();
     }
 
     class RFID{
@@ -89,9 +90,11 @@ class Board{
 
                 Serial.println();
                 Serial.print("AUTH: ");
+                content.remove(0, 1);
                 content.toUpperCase();
+                Serial.println(content);
 
-                if(content.substring(1) == "C2 D6 F7 2C")
+                if(content.substring(0) == "C2 D6 F7 2C")
                 {
                     String hex = "C2 D6 F7 2C";
                     hex.replace(" ", "%20");

@@ -8,8 +8,8 @@
 #include <ESPAsyncTCP.h>
 #include <DNSServer.h>
 
-const char* password = "esp32cam";
-const char* ssid = "ESP";
+const char* password = "mockumek";
+const char* ssid = "mockumek";
 const int port = 80;
 DNSServer dnsServer;
 AsyncWebServer server(port);
