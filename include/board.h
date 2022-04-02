@@ -65,7 +65,7 @@ class Board{
 
             static void Authenticate()
             {
-                Serial.println("[ STAND BY ... ]");
+                // Serial.println("[ STAND BY ... ]");
                 delay(1000);
 
                 if(!rfid.PICC_IsNewCardPresent())
@@ -93,7 +93,15 @@ class Board{
 
                 if(content.substring(1) == "C2 D6 F7 2C")
                 {
+                    String hex = "C2 D6 F7 2C";
+                    hex.replace(" ", "%20");
+
+                    const char* uri = hex.c_str();
+                    // Serial.print("URI: ");
+                    // Serial.println(uri);
+
                     String sensorReadings = WebServer::httpGETRequest(serverName);
+                    String apiAccess = WebServer::httpGetRequestAuth(apiAuth, uri);
                     Serial.println(sensorReadings);
 
                     Serial.println("ACCESS GRANTED.");

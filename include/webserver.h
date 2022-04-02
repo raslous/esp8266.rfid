@@ -4,11 +4,19 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
+#include <ESPAsyncWebServer.h>
+#include <ESPAsyncTCP.h>
+#include <DNSServer.h>
 
-const char* ssid = "ESP";
 const char* password = "esp32cam";
+const char* ssid = "ESP";
+const int port = 80;
+DNSServer dnsServer;
+AsyncWebServer server(port);
 
 const char* serverName = "http://anetid-001-site1.ctempurl.com/api/access";
+const char* apiAuth = "https://localhost:7085/api/auth?hex=";
+// const char* apiAuth = "https://localhost:7085/api/auth?hex=C2%20D6%20F7%202C";
 
 class WebServer
 {
@@ -27,7 +35,23 @@ class WebServer
 
     static void Start()
     {
+        server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
+            request->send(200, "text/plain", "ready");
+        });
 
+        server.begin();
+    }
+
+    static String httpGetRequestAuth(const char* url, const char* query)
+    {
+        char buffer[64];
+        strcpy(buffer, url);
+        strcat(buffer, query);
+
+        Serial.print("BUFFER: "); 
+        Serial.println(buffer);
+
+        return httpGETRequest(buffer);
     }
 
     static String httpGETRequest(const char* serverName)
