@@ -92,21 +92,15 @@ class Board{
                 Serial.print("AUTH: ");
                 content.remove(0, 1);
                 content.toUpperCase();
-                Serial.println(content);
+                // Serial.println(content);
 
-                if(content.substring(0) == "C2 D6 F7 2C")
+                content.replace(" ", "%20");
+                const char* uri = content.c_str();
+                String auth = WebServer::httpGetRequestAuth(apiAuth, uri);
+                Serial.println(auth);
+
+                if(auth.substring(0) == "granted")
                 {
-                    String hex = "C2 D6 F7 2C";
-                    hex.replace(" ", "%20");
-
-                    const char* uri = hex.c_str();
-                    // Serial.print("URI: ");
-                    // Serial.println(uri);
-
-                    String sensorReadings = WebServer::httpGETRequest(serverName);
-                    String apiAccess = WebServer::httpGetRequestAuth(apiAuth, uri);
-                    Serial.println(sensorReadings);
-
                     Serial.println("ACCESS GRANTED.");
                     digitalWrite(RELAY, LOW);
                     digitalWrite(LED_BUILTIN, LOW);

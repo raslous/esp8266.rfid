@@ -15,7 +15,7 @@ DNSServer dnsServer;
 AsyncWebServer server(port);
 
 const char* serverName = "http://anetid-001-site1.ctempurl.com/api/access";
-const char* apiAuth = "https://localhost:7085/api/auth?hex=";
+const char* apiAuth = "http://anetid-001-site1.ctempurl.com/api/auth?hex=";
 // const char* apiAuth = "https://localhost:7085/api/auth?hex=C2%20D6%20F7%202C";
 
 class WebServer
