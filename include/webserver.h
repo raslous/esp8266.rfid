@@ -8,8 +8,8 @@
 #include <ESPAsyncTCP.h>
 #include <DNSServer.h>
 
-const char* password = "mockumek";
-const char* ssid = "mockumek";
+const char* ssid = "ESP";
+const char* password = "esp32cam";
 const int port = 80;
 DNSServer dnsServer;
 AsyncWebServer server(port);
@@ -55,7 +55,6 @@ class WebServer
         strcpy(buffer, url);
         strcat(buffer, query);
 
-        Serial.print("BUFFER: "); 
         Serial.println(buffer);
 
         return httpGETRequest(buffer);

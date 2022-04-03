@@ -49,10 +49,18 @@ class Board{
                 digitalWrite(RELAY, HIGH);
                 digitalWrite(BUZZER, LOW);
                 isInitialized = true;
+                Serial.println("READY. STAND BY NOW.");
+
             }
 
             static void Run()
             {
+                if(!rfid.PICC_IsNewCardPresent())
+                    return;
+
+                if(!rfid.PICC_ReadCardSerial())
+                    return;
+
                 if(toggle)
                     Authenticate();
                 else
@@ -67,14 +75,7 @@ class Board{
 
             static void Authenticate()
             {
-                // Serial.println("[ STAND BY ... ]");
-                delay(1000);
-
-                if(!rfid.PICC_IsNewCardPresent())
-                    return;
-
-                if(!rfid.PICC_ReadCardSerial())
-                    return;
+                Serial.println("AUTHENTICATION.");
 
                 Serial.print("UID HEX: ");
                 String content = "";
@@ -93,7 +94,6 @@ class Board{
                 Serial.print("AUTH: ");
                 content.remove(0, 1);
                 content.toUpperCase();
-                // Serial.println(content);
 
                 content.replace(" ", "%20");
                 const char* uri = content.c_str();
