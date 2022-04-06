@@ -48,9 +48,9 @@ class WebServer
 
         server.on("/toggle", HTTP_GET, [](AsyncWebServerRequest *request){
             String message;
-            if(request->hasParam("message"))
+            if(request->hasParam("auth"))
             {
-                message = request->getParam("message")->value();
+                message = request->getParam("auth")->value();
                 toggle = message == "on" ? true : false;
 
                 request->send(200, "text/plain", message);
