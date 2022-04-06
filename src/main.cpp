@@ -13,5 +13,5 @@ void loop()
 {
     Board::RFID::Open();
     Board::RFID::Run();
-    // Board::RFID::Authenticate();
+    Board::StandByManager();
 }

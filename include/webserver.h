@@ -46,6 +46,21 @@ class WebServer
             toggle = !toggle;
         });
 
+        server.on("/toggle", HTTP_GET, [](AsyncWebServerRequest *request){
+            String message;
+            if(request->hasParam("message"))
+            {
+                message = request->getParam("message")->value();
+                toggle = message == "on" ? true : false;
+
+                request->send(200, "text/plain", message);
+            }
+            else
+            {
+                request->send(404, "text/plain", "not found");
+            }
+        });
+
         server.begin();
     }
 

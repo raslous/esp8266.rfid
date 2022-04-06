@@ -10,12 +10,13 @@
 #define RESET D9
 #define SLAVESELECT D14
 
-#define CREDENTIAL "C2 D6 F7 2C"
-
 MFRC522 rfid(SLAVESELECT, RESET);
 
 bool isInitialized = false;
-bool isStandBy = false;
+bool isStandBy = toggle;
+unsigned long start;
+unsigned long timer;
+unsigned long duration = (1000 * 60) * 3;
 
 class Board{
     public:
@@ -31,6 +32,26 @@ class Board{
 
         WebServer::Setup();
         WebServer::Start();
+    }
+
+    static void StandByManager()
+    {
+        isStandBy = toggle;
+
+        if(!isStandBy)
+        {
+            int second = start + duration - timer;
+            Serial.print("HALT: ");
+            Serial.print(second/1000);
+            Serial.print(" seconds");
+            Serial.println("\n");
+
+            timer = millis();
+            if(timer >= start + duration)
+            {
+                isStandBy = true;
+            }
+        }
     }
 
     class RFID{
